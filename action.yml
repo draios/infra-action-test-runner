@@ -1,0 +1,64 @@
+name: 'Helm CI'
+description: GitHub Action for hanlde CI of helm charts, Sysdig way'
+inputs:
+  artifactory_username:
+    required: true
+  artifactory_password:
+    required: true
+  github_token:
+    description: GITHUB_TOKEN secret
+    required: true
+  kind_version:
+    description: KinD version
+    required: false
+    default: "v0.11.1"
+  kind_config_path:
+    description: Kind config path
+    required: false
+    default: tests/kind-config.yaml
+  kind_cluster_name:
+    description: Kind cluster name
+    required: false
+    default: kind
+  bats_version:
+    description: "BATS version"
+    required: false
+    default: "1.5.0"
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Python
+      uses: actions/setup-python@v2
+    - name: Setup BATS
+      uses: mig4/setup-bats@v1
+      with:
+        bats-version: ${{ inputs.bats_version }}
+    - name: Setup Bats libs
+      uses: brokenpip3/setup-bats-libs@0.0.3
+    - name: Setup Taskfile
+      uses: arduino/setup-task@v1
+    - name: Setup Helm
+      uses: azure/setup-helm@v1
+    - name: Setup KinD
+      uses: helm/kind-action@v1.2.0
+      with:
+        version: ${{ inputs.kind_version }}
+        config: ${{inputs.kind_config_path}}
+        cluster_name: ${{inputs.kind_cluster_name}}
+    - name: Lint and tests
+      shell: bash
+      env:
+        GITHUB_REF_NAME: ${{ github.ref }}
+        GITHUB_RUN_ID: ${{ github.run_id }}
+        ARTIFACTORY_USERNAME: ${{ inputs.ARTIFACTORY_USERNAME }}
+        ARTIFACTORY_PASSWORD: ${{ inputs.ARTIFACTORY_PASSWORD }}
+      run: |
+        task test
+    - name: Clean up
+      if: always()
+      shell: bash
+      run: task test:clean
+    - name: Debug failure
+      if: failure()
+      shell: bash
+      run: task test:logs
