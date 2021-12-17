@@ -8,6 +8,10 @@ inputs:
   github_token:
     description: GITHUB_TOKEN secret
     required: true
+  kind_needed:
+    description: "Boolean if a Kubernetes In Docker cluster is needed for tests (default: false)"
+    required: false
+    default: "true"
   kind_version:
     description: KinD version
     required: false
@@ -29,17 +33,21 @@ runs:
   steps:
     - name: Setup Python
       uses: actions/setup-python@v2
+
     - name: Setup BATS
+      if: ${{ inputs.kind_needed == 'true' }}
       uses: mig4/setup-bats@v1
       with:
         bats-version: ${{ inputs.bats_version }}
     - name: Setup Bats libs
+      if: ${{ inputs.kind_needed == 'true' }}
       uses: brokenpip3/setup-bats-libs@0.0.3
     - name: Setup Taskfile
       uses: arduino/setup-task@v1
     - name: Setup Helm
       uses: azure/setup-helm@v1
     - name: Setup KinD
+      if: ${{ inputs.kind_needed == 'true' }}
       uses: helm/kind-action@v1.2.0
       with:
         version: ${{ inputs.kind_version }}
