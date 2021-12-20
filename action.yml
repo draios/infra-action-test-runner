@@ -28,6 +28,10 @@ inputs:
     description: "BATS version"
     required: false
     default: "1.5.0"
+  envsubst_needed:
+    description:
+    required: false
+    default: "false"
 runs:
   using: "composite"
   steps:
@@ -41,7 +45,10 @@ runs:
         bats-version: ${{ inputs.bats_version }}
     - name: Setup Bats libs
       if: ${{ inputs.kind_needed == 'true' }}
-      uses: brokenpip3/setup-bats-libs@0.0.3
+      uses: brokenpip3/setup-bats-libs@0.1.0
+    - name: Setup envsubst
+      if: ${{ inputs.envsubst_needed == 'true' }}
+      run: sudo apt update; sudo apt install -y gettext-base
     - name: Setup Taskfile
       uses: arduino/setup-task@v1
     - name: Setup Helm
