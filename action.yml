@@ -52,6 +52,7 @@ runs:
       uses: brokenpip3/setup-bats-libs@0.1.0
     - name: Setup envsubst
       if: ${{ inputs.envsubst_needed == 'true' }}
+      shell: bash
       run: sudo apt update; sudo apt install -y gettext-base
     - name: Setup Taskfile
       uses: arduino/setup-task@v1
