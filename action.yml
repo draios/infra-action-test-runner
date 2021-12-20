@@ -1,13 +1,17 @@
 name: 'Helm CI'
 description: GitHub Action for hanlde CI of helm charts, Sysdig way'
 inputs:
-  artifactory_username:
-    required: true
-  artifactory_password:
-    required: true
   github_token:
     description: GITHUB_TOKEN secret
     required: true
+  artifactory_username:
+    description: Artifactory Username
+    default: ""
+    required: false
+  artifactory_password:
+    description: Artifactory Password
+    default: ""
+    required: false
   kind_needed:
     description: "Boolean if a Kubernetes In Docker cluster is needed for tests (default: false)"
     required: false
@@ -29,7 +33,7 @@ inputs:
     required: false
     default: "1.5.0"
   envsubst_needed:
-    description:
+    description: Indicate if envsubst is needed (only on MacOs)
     required: false
     default: "false"
 runs:
