@@ -1,5 +1,5 @@
-name: 'Helm CI'
-description: GitHub Action for hanlde CI of helm charts, Sysdig way'
+name: 'Tests Runner'
+description: GitHub Action for run tests, Sysdig way'
 inputs:
   github_token:
     description: GITHUB_TOKEN secret
