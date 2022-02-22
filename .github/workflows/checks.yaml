@@ -1,7 +1,5 @@
 name: Sanity Checks
 on:
-  push:
-    branches: ["add-test-name"]
   pull_request:
     types: [opened, edited, synchronize, reopened]
 jobs:

@@ -29,6 +29,7 @@ The other minimal entrypoints required are
 - `kind_cluster_name`: Kind cluster name (default: kind)
 - `bats_version`: BATS version ("1.5.0")
 - `envsubst_needed`: Indicate if envsubst is needed (default: "false")
+- `taskfile_name`: Name of the taskfile task to be executed (default: "test")
 
 ## Example workflow
 
