@@ -22,8 +22,10 @@ tasks:
     desc: "Show logs"
     cmds:
     - echo "Testing action: Some logs.."
+    - "kubectl logs -n kube-system etcd-kind-control-plane"
 
   foobar:
     desc: "Foobar task"
     cmds:
     - echo "Testing action: Running not default task.."
+    - "kubectl get po -n kube-system"
