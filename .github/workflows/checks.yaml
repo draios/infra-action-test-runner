@@ -1,5 +1,7 @@
 name: Sanity Checks
 on:
+  push:
+    branches: ["add-test-name"]
   pull_request:
     types: [opened, edited, synchronize, reopened]
 jobs:
@@ -26,12 +28,11 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           dry_run: true
       - run: echo "Calculated Next Tag is ${{ steps.tag_version.outputs.tags }}"
-      #use this with ${{needs.job1.outputs.output1}}
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: arduino/setup-task@v1
-      - name: Lint and tests
-        run: |
-          task test
+      - name: Test local action
+        id: local-action
+        uses: ./
