@@ -26,12 +26,22 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           dry_run: true
       - run: echo "Calculated Next Tag is ${{ steps.tag_version.outputs.tags }}"
-      #use this with ${{needs.job1.outputs.output1}}
-  test:
+  test-action-default:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: arduino/setup-task@v1
-      - name: Lint and tests
-        run: |
-          task test
+      - name: Test local action
+        id: local-action
+        uses: ./
+  test-action-not-default:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: arduino/setup-task@v1
+      - name: Test local action
+        id: local-action
+        uses: ./
+        with:
+          envsubst_needed: "true"
+          taskfile_name: "test:foobar"
