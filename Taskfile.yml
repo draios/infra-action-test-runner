@@ -30,10 +30,11 @@ tasks:
     method: checksum
 
   pre-commit-setup:
+    preconditions:
+      - sh: "command -v pre-commit"
+        msg: "Pre-commit not found (https://pre-commit.com)"
     cmds:
-      - pip3 install pre-commit
-    status:
-      - which pre-commit
+      - echo "All requirements met"
 
   setup:
     desc: Bootstrap dev environment
