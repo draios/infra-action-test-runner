@@ -1,0 +1,29 @@
+# https://taskfile.dev
+
+version: '3'
+
+tasks:
+  default:
+    cmds:
+      - task -l
+    silent: true
+
+  all:
+    desc: "Run all tests"
+    cmds:
+      - echo "Testing action: run all tests"
+
+  clean:
+    desc: "Cleanup tests"
+    cmds:
+    - echo "Testing action: Cleaning up.."
+
+  logs:
+    desc: "Show logs"
+    cmds:
+    - echo "Testing action: Some logs.."
+
+  foobar:
+    desc: "Foobar task"
+    cmds:
+    - echo "Testing action: Running not default task.."

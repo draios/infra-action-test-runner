@@ -2,6 +2,9 @@
 
 version: '3'
 
+includes:
+  test: ./tests/Taskfile.yml
+
 vars:
   GREETING: Hello, World!
 
@@ -42,6 +45,6 @@ tasks:
       - task: pre-commit
 
   test:
-    desc: Run tests
+    desc: Alias for test:all
     cmds:
-      - echo "Nothing to do"
+      - task: test:all
