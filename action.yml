@@ -21,13 +21,21 @@ inputs:
     required: false
     default: "v0.11.1"
   kind_config_path:
-    description: Kind config path
+    description: KinD config path
     required: false
     default: tests/kind-config.yaml
   kind_cluster_name:
-    description: Kind cluster name
+    description: KinD cluster name
     required: false
     default: kind
+  kind_wait:
+    description: KinD wait time for provisioning
+    required: false
+    default: 60s
+  kind_kubectl_version:
+    description: kubectl version to use with KinD
+    required: false
+    default: v1.20.8
   bats_version:
     description: "BATS version"
     required: false
@@ -45,7 +53,6 @@ runs:
   steps:
     - name: Setup Python
       uses: actions/setup-python@v2
-
     - name: Setup BATS
       uses: mig4/setup-bats@v1
       with:
@@ -65,8 +72,10 @@ runs:
       uses: helm/kind-action@v1.2.0
       with:
         version: ${{ inputs.kind_version }}
-        config: ${{inputs.kind_config_path}}
-        cluster_name: ${{inputs.kind_cluster_name}}
+        config: ${{ inputs.kind_config_path }}
+        cluster_name: ${{ inputs.kind_cluster_name }}
+        wait: ${{ inputs.kind_wait }}
+        kubectl_version: ${{ inputs.kind_kubectl_version }}
     - name: Lint and tests
       shell: bash
       env:
