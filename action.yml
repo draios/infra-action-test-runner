@@ -47,12 +47,10 @@ runs:
       uses: actions/setup-python@v2
 
     - name: Setup BATS
-      if: ${{ inputs.kind_needed == 'true' }}
       uses: mig4/setup-bats@v1
       with:
         bats-version: ${{ inputs.bats_version }}
-    - name: Setup Bats libs
-      if: ${{ inputs.kind_needed == 'true' }}
+    - name: Setup BATS libs
       uses: brokenpip3/setup-bats-libs@0.1.0
     - name: Setup envsubst
       if: ${{ inputs.envsubst_needed == 'true' }}
