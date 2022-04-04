@@ -25,8 +25,11 @@ The other minimal entrypoints required are
 - `artifactory_password`: Artifactory Password
 - `kind_needed`: Boolean if a Kubernetes In Docker cluster is needed for tests (default: false)
 - `kind_version`: KinD version (default: "v0.11.1")
-- `kind_config_path`: Kind config path (default: tests/kind-config.yaml)
-- `kind_cluster_name`: Kind cluster name (default: kind)
+- `kind_config_path`: KinD config path (default: tests/kind-config.yaml)
+- `kind_cluster_name`: KinD cluster name (default: kind)
+- `kind_wait`: increase the timeout for KinD to check if the control plane is ready (default: 60s)
+- `kind_kubectl_version`: the kubectl version to use with KinD (default: v1.20.8)
+- `kind_log_level`: the KinD verbosity level (default: 0)
 - `bats_version`: BATS version ("1.5.0")
 - `envsubst_needed`: Indicate if envsubst is needed (default: "false")
 - `taskfile_name`: Name of the taskfile task to be executed (default: "test")
