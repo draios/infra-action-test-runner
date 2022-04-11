@@ -70,7 +70,7 @@ runs:
     - name: Setup Taskfile
       uses: arduino/setup-task@v1
     - name: Setup Helm
-      uses: azure/setup-helm@v1
+      uses: azure/setup-helm@v2.1
     - name: Setup KinD
       if: ${{ inputs.kind_needed == 'true' }}
       uses: helm/kind-action@v1.2.0
