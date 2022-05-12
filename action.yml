@@ -19,7 +19,7 @@ inputs:
   kind_version:
     description: KinD version
     required: false
-    default: "v0.11.1"
+    default: "v0.12.0"
   kind_config_path:
     description: KinD config path
     required: false
@@ -73,7 +73,7 @@ runs:
       uses: azure/setup-helm@v1
     - name: Setup KinD
       if: ${{ inputs.kind_needed == 'true' }}
-      uses: helm/kind-action@v1.2.0
+      uses: draios/kind-action@v1.2.1
       with:
         version: ${{ inputs.kind_version }}
         config: ${{ inputs.kind_config_path }}
