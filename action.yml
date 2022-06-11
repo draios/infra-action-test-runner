@@ -52,6 +52,14 @@ inputs:
     description: Name of the taskfile task to be executed
     required: false
     default: "test"
+  quay_username:
+    description: quay Username
+    default: ""
+    required: false
+  quay_password:
+    description: quay Password
+    default: ""
+    required: false
 runs:
   using: "composite"
   steps:
@@ -89,6 +97,8 @@ runs:
         ARTIFACTORY_USERNAME: ${{ inputs.ARTIFACTORY_USERNAME }}
         ARTIFACTORY_PASSWORD: ${{ inputs.ARTIFACTORY_PASSWORD }}
         TASKFILE_NAME: ${{ inputs.taskfile_name }}
+        QUAY_USERNAME: ${{ inputs.QUAY_USERNAME }}
+        QUAY_PASSWORD: ${{ inputs.QUAY_PASSWORD }}
       run: task ${TASKFILE_NAME}
     - name: Clean up
       if: always()
