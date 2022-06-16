@@ -33,6 +33,8 @@ The other minimal entrypoints required are
 - `bats_version`: BATS version ("1.5.0")
 - `envsubst_needed`: Indicate if envsubst is needed (default: "false")
 - `taskfile_name`: Name of the taskfile task to be executed (default: "test")
+- `quay_username`: quay Username
+- `quay_password`: quay Password
 
 ## Example workflow
 
