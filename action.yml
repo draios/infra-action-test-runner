@@ -35,7 +35,7 @@ inputs:
   kind_kubectl_version:
     description: kubectl version to use with KinD
     required: false
-    default: v1.20.8
+    default: v1.21.12
   kind_log_level:
     description: KinD verbosity to set
     required: false
@@ -88,7 +88,7 @@ runs:
         cluster_name: ${{ inputs.kind_cluster_name }}
         wait: ${{ inputs.kind_wait }}
         kubectl_version: ${{ inputs.kind_kubectl_version }}
-        log_level: ${{ inputs.kind_log_level }}
+        verbosity: ${{ inputs.kind_log_level }}
     - name: Lint and tests
       shell: bash
       env:
