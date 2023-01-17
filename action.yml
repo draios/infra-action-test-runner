@@ -94,11 +94,11 @@ runs:
       env:
         GITHUB_REF_NAME: ${{ github.ref }}
         GITHUB_RUN_ID: ${{ github.run_id }}
-        ARTIFACTORY_USERNAME: ${{ inputs.ARTIFACTORY_USERNAME }}
-        ARTIFACTORY_PASSWORD: ${{ inputs.ARTIFACTORY_PASSWORD }}
+        ARTIFACTORY_USERNAME: ${{ inputs.artifactory_username }}
+        ARTIFACTORY_PASSWORD: ${{ inputs.artifactory_password }}
         TASKFILE_NAME: ${{ inputs.taskfile_name }}
-        QUAY_USERNAME: ${{ inputs.QUAY_USERNAME }}
-        QUAY_PASSWORD: ${{ inputs.QUAY_PASSWORD }}
+        QUAY_USERNAME: ${{ inputs.quay_username }}
+        QUAY_PASSWORD: ${{ inputs.quay_password }}
       run: task ${TASKFILE_NAME}
     - name: Clean up
       if: always()
