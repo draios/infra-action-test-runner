@@ -4,9 +4,6 @@ inputs:
   github_token:
     description: GITHUB_TOKEN secret
     required: true
-  image_original_tag:
-    description: Original tag of the image to be imported
-    required: true
   artifactory_username:
     description: Artifactory Username
     default: ""
@@ -67,10 +64,17 @@ inputs:
     description: Name of the artifact to be downloaded and imported
     required: false
     default: "image"
+  import_image_artifact:
+    description: "Boolean if the image artifact should be imported (default: false)"
+    required: false
+    default: "false"
   local_image_name:
     description: Name of the image to be imported
     required: false
     default: "testimage:local"
+  image_original_tag:
+    description: Original tag of the image to be imported
+    required: false
 runs:
   using: "composite"
   steps:
@@ -102,15 +106,18 @@ runs:
         verbosity: ${{ inputs.kind_log_level }}
     - name: Download image artifact
       uses: actions/download-artifact@v3.0.1
+      if : ${{ inputs.import_image_artifact == 'true' }}
       with:
         name: ${{ inputs.artifact_name }}
         path: /tmp
     - name: Load image to docker
       shell: bash
+      if : ${{ inputs.import_image_artifact == 'true' }}
       run: |
           docker load --input /tmp/${{ inputs.artifact_name }}.tar
     - name: Retagging image
       shell: bash
+      if : ${{ inputs.import_image_artifact == 'true' }}
       run: |
           original_tag="${{ input.image_original_tag }}"
           local_tag="${{ input.local_image_name }}"
