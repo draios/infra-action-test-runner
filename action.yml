@@ -4,6 +4,9 @@ inputs:
   github_token:
     description: GITHUB_TOKEN secret
     required: true
+  image_original_tag:
+    description: Original tag of the image to be imported
+    required: true
   artifactory_username:
     description: Artifactory Username
     default: ""
@@ -60,6 +63,14 @@ inputs:
     description: quay Password
     default: ""
     required: false
+  artifact_name:
+    description: Name of the artifact to be downloaded and imported
+    required: false
+    default: "image"
+  local_image_name:
+    description: Name of the image to be imported
+    required: false
+    default: "testimage:local"
 runs:
   using: "composite"
   steps:
@@ -89,6 +100,22 @@ runs:
         wait: ${{ inputs.kind_wait }}
         kubectl_version: ${{ inputs.kind_kubectl_version }}
         verbosity: ${{ inputs.kind_log_level }}
+    - name: Download image artifact
+      uses: actions/download-artifact@v3.0.1
+      with:
+        name: ${{ inputs.artifact_name }}
+        path: /tmp
+    - name: Load image to docker
+      shell: bash
+      run: |
+          docker load --input /tmp/${{ inputs.artifact_name }}.tar
+    - name: Retagging image
+      shell: bash
+      run: |
+          original_tag="${{ input.image_original_tag }}"
+          local_tag="${{ input.local_image_name }}"
+          echo "retagging docker image $original_tag $local_tag"
+          docker tag $original_tag $local_tag
     - name: Lint and tests
       shell: bash
       env:
