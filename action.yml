@@ -119,7 +119,7 @@ runs:
       shell: bash
       if : ${{ inputs.import_image_artifact == 'true' }}
       run: |
-          original_tag="${{ input.image_original_tag }}"
+          original_tag=`echo "${{ input.image_original_tag }}" | head -n 1`
           local_tag="${{ input.local_image_name }}"
           echo "retagging docker image $original_tag $local_tag"
           docker tag $original_tag $local_tag
