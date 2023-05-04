@@ -134,11 +134,11 @@ runs:
         QUAY_USERNAME: ${{ inputs.quay_username }}
         QUAY_PASSWORD: ${{ inputs.quay_password }}
       run: task ${TASKFILE_NAME}
-    - name: Clean up
-      if: always()
-      shell: bash
-      run: task test:clean
     - name: Debug failure
       if: failure()
       shell: bash
       run: task test:logs
+    - name: Clean up
+      if: always()
+      shell: bash
+      run: task test:clean
