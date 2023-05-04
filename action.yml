@@ -105,7 +105,7 @@ runs:
         kubectl_version: ${{ inputs.kind_kubectl_version }}
         verbosity: ${{ inputs.kind_log_level }}
     - name: Download image artifact
-      uses: actions/download-artifact@v3.0.1
+      uses: actions/download-artifact@v3.0.2
       if : ${{ inputs.import_image_artifact == 'true' }}
       with:
         name: ${{ inputs.artifact_name }}
