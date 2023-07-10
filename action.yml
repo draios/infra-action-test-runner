@@ -22,7 +22,7 @@ inputs:
     required: false
   gar_registry:
     description: GAR Registry
-    default: "us-docker.pkg.dev/sysdig-artifact-registry-dev/gar-docker"
+    default: ""
     required: false
   kind_needed:
     description: "Boolean if a Kubernetes In Docker cluster is needed for tests (default: false)"

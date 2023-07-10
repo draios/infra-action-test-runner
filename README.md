@@ -25,7 +25,7 @@ The other minimal entrypoints required are
 - `artifactory_password`: Artifactory Password
 - `gar_username`: GAR Username
 - `gar_password`: GAR Password
-- `gar_registry`: GAR Registry (default: "us-docker.pkg.dev/sysdig-artifact-registry-dev/gar-docker")
+- `gar_registry`: GAR Registry
 - `kind_needed`: Boolean if a Kubernetes In Docker cluster is needed for tests (default: false)
 - `kind_version`: KinD version (default: "v0.19.0")
 - `kind_config_path`: KinD config path (default: tests/kind-config.yaml)
