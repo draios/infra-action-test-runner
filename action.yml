@@ -94,12 +94,10 @@ runs:
       uses: actions/setup-python@v4.7.0
       with:
         python-version: '3.x'
-    - name: Setup BATS
-      uses: mig4/setup-bats@v1
+    - name: Install Bats and bats libs
+      uses: brokenpip3/setup-bats-libs@1.0.0
       with:
         bats-version: ${{ inputs.bats_version }}
-    - name: Setup BATS libs
-      uses: brokenpip3/setup-bats-libs@0.1.0
     - name: Setup envsubst
       if: ${{ inputs.envsubst_needed == 'true' }}
       shell: bash
