@@ -99,7 +99,7 @@ runs:
       with:
         bats-version: ${{ inputs.bats_version }}
     - name: Setup BATS libs
-      uses: brokenpip3/setup-bats-libs@0.1.0
+      uses: brokenpip3/setup-bats-libs@1.5.0
     - name: Setup envsubst
       if: ${{ inputs.envsubst_needed == 'true' }}
       shell: bash
