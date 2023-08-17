@@ -94,12 +94,14 @@ runs:
       uses: actions/setup-python@v4.7.0
       with:
         python-version: '3.x'
-    - name: Setup BATS
-      uses: mig4/setup-bats@v1
+    - name: Install Bats and bats libs
+      uses: brokenpip3/setup-bats-libs@1.5.1
       with:
         bats-version: ${{ inputs.bats_version }}
-    - name: Setup BATS libs
-      uses: brokenpip3/setup-bats-libs@0.1.0
+        support-path: "${{ github.workspace }}/.bats/bats-support"
+        assert-path: "${{ github.workspace }}/.bats/bats-assert"
+        detik-path: "${{ github.workspace }}/.bats/bats-detik"
+        file-path: "${{ github.workspace }}/.bats/bats-file"
     - name: Setup envsubst
       if: ${{ inputs.envsubst_needed == 'true' }}
       shell: bash
@@ -140,6 +142,7 @@ runs:
     - name: Lint and tests
       shell: bash
       env:
+        BATS_LIB_PATH: "${{ github.workspace }}/.bats"
         GITHUB_REF_NAME: ${{ github.ref }}
         GITHUB_RUN_ID: ${{ github.run_id }}
         ARTIFACTORY_USERNAME: ${{ inputs.artifactory_username }}
