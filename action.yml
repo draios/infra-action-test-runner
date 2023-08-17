@@ -95,8 +95,7 @@ runs:
       with:
         python-version: '3.x'
     - name: Install Bats and bats libs
-      #uses: brokenpip3/setup-bats-libs@1.5.0
-      uses: brokenpip3/setup-bats-libs@add-path-if-cache
+      uses: brokenpip3/setup-bats-libs@1.5.1
       with:
         bats-version: ${{ inputs.bats_version }}
         support-path: "${{ github.workspace }}/.bats/bats-support"
