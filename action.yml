@@ -1,4 +1,4 @@
-name: 'Tests Runner'
+name: "Tests Runner"
 description: GitHub Action for run tests, Sysdig way'
 inputs:
   github_token:
@@ -55,7 +55,7 @@ inputs:
   bats_version:
     description: "BATS version"
     required: false
-    default: "1.9.0"
+    default: "1.10.0"
   envsubst_needed:
     description: Indicate if envsubst is needed (only on MacOs)
     required: false
@@ -93,7 +93,7 @@ runs:
     - name: Setup Python
       uses: actions/setup-python@v4.7.0
       with:
-        python-version: '3.x'
+        python-version: "3.x"
     - name: Install Bats and bats libs
       uses: draios/infra-action-setup-bats-libs@1.5.1
       with:
@@ -122,23 +122,23 @@ runs:
         verbosity: ${{ inputs.kind_log_level }}
     - name: Download image artifact
       uses: actions/download-artifact@v3.0.2
-      if : ${{ inputs.import_image_artifact == 'true' }}
+      if: ${{ inputs.import_image_artifact == 'true' }}
       with:
         name: ${{ inputs.artifact_name }}
         path: /tmp
     - name: Load image to docker
       shell: bash
-      if : ${{ inputs.import_image_artifact == 'true' }}
+      if: ${{ inputs.import_image_artifact == 'true' }}
       run: |
-          docker load --input /tmp/${{ inputs.artifact_name }}.tar
+        docker load --input /tmp/${{ inputs.artifact_name }}.tar
     - name: Retagging image
       shell: bash
-      if : ${{ inputs.import_image_artifact == 'true' }}
+      if: ${{ inputs.import_image_artifact == 'true' }}
       run: |
-          original_tag=`echo "${{ inputs.image_original_tag }}" | head -n 1`
-          local_tag="${{ inputs.local_image_name }}"
-          echo "retagging docker image $original_tag $local_tag"
-          docker tag $original_tag $local_tag
+        original_tag=`echo "${{ inputs.image_original_tag }}" | head -n 1`
+        local_tag="${{ inputs.local_image_name }}"
+        echo "retagging docker image $original_tag $local_tag"
+        docker tag $original_tag $local_tag
     - name: Lint and tests
       shell: bash
       env:
@@ -156,9 +156,13 @@ runs:
       run: task ${TASKFILE_NAME}
     - name: Debug failure
       if: failure()
+      env:
+        BATS_LIB_PATH: "${{ github.workspace }}/.bats"
       shell: bash
       run: task test:logs
     - name: Clean up
       if: always()
+      env:
+        BATS_LIB_PATH: "${{ github.workspace }}/.bats"
       shell: bash
       run: task test:clean
