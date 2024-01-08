@@ -139,6 +139,12 @@ runs:
         local_tag="${{ inputs.local_image_name }}"
         echo "retagging docker image $original_tag $local_tag"
         docker tag $original_tag $local_tag
+    - name: Load image to KinD
+      shell: bash
+      if: ${{ inputs.import_image_artifact == 'true' }}
+      run: |
+        local_tag="${{ inputs.local_image_name }}"
+        kind load docker-image $local_tag --name ${{ inputs.kind_cluster_name }}
     - name: Lint and tests
       shell: bash
       env:
