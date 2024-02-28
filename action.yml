@@ -107,7 +107,7 @@ runs:
       shell: bash
       run: sudo apt update; sudo apt install -y gettext-base
     - name: Setup Taskfile
-      uses: arduino/setup-task@v1
+      uses: arduino/setup-task@v2
     - name: Setup Helm
       uses: azure/setup-helm@v3
     - name: Setup KinD
