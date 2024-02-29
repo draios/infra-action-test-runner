@@ -95,7 +95,7 @@ runs:
       with:
         python-version: "3.x"
     - name: Install Bats and bats libs
-      uses: draios/infra-action-setup-bats-libs@1.5.1
+      uses: bats-core/bats-action@1.5.5
       with:
         bats-version: ${{ inputs.bats_version }}
         support-path: "${{ github.workspace }}/.bats/bats-support"
