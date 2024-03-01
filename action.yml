@@ -91,11 +91,11 @@ runs:
   using: "composite"
   steps:
     - name: Setup Python
-      uses: actions/setup-python@v4.7.0
+      uses: actions/setup-python@v5.0.0
       with:
         python-version: "3.x"
     - name: Install Bats and bats libs
-      uses: bats-core/bats-action@1.5.5
+      uses: bats-core/bats-action@1.5.6
       with:
         bats-version: ${{ inputs.bats_version }}
         support-path: "${{ github.workspace }}/.bats/bats-support"
@@ -107,12 +107,12 @@ runs:
       shell: bash
       run: sudo apt update; sudo apt install -y gettext-base
     - name: Setup Taskfile
-      uses: arduino/setup-task@v1
+      uses: arduino/setup-task@v2
     - name: Setup Helm
-      uses: azure/setup-helm@v3
+      uses: azure/setup-helm@v4
     - name: Setup KinD
       if: ${{ inputs.kind_needed == 'true' }}
-      uses: helm/kind-action@v1.8.0
+      uses: helm/kind-action@v1.9.0
       with:
         version: ${{ inputs.kind_version }}
         config: ${{ inputs.kind_config_path }}
@@ -121,7 +121,7 @@ runs:
         kubectl_version: ${{ inputs.kind_kubectl_version }}
         verbosity: ${{ inputs.kind_log_level }}
     - name: Download image artifact
-      uses: actions/download-artifact@v3.0.2
+      uses: actions/download-artifact@v4.1.4
       if: ${{ inputs.import_image_artifact == 'true' }}
       with:
         name: ${{ inputs.artifact_name }}
