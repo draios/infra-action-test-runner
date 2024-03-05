@@ -95,7 +95,7 @@ runs:
       with:
         python-version: "3.x"
     - name: Install Bats and bats libs
-      uses: bats-core/bats-action@1.5.5
+      uses: bats-core/bats-action@1.5.6
       with:
         bats-version: ${{ inputs.bats_version }}
         support-path: "${{ github.workspace }}/.bats/bats-support"
