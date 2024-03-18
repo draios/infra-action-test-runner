@@ -120,6 +120,27 @@ runs:
         wait: ${{ inputs.kind_wait }}
         kubectl_version: ${{ inputs.kind_kubectl_version }}
         verbosity: ${{ inputs.kind_log_level }}
+    - name: Login to Artifactory
+      uses: docker/login-action@v2
+      if: ${{inputs.artifactory_username != '' && inputs.artifactory_password != '' }}
+      with:
+        registry: ${{ inputs.artifactory_url }}
+        username: ${{ inputs.artifactory_username }}
+        password: ${{ inputs.artifactory_password }}
+    - name: Login to Quay
+      uses: docker/login-action@v2
+      if: ${{inputs.quay_username != '' && inputs.quay_password != ''  }}
+      with:
+        registry: quay.io
+        username: ${{ inputs.quay_username }}
+        password: ${{ inputs.quay_password }}
+    - name: Login to GAR
+      uses: docker/login-action@v2
+      if: ${{inputs.gar_password != '' }}
+      with:
+        registry: ${{ inputs.gar_prefix }}
+        username: _json_key
+        password: ${{ inputs.gar_password }}
     - name: Download image artifact
       uses: actions/download-artifact@v4.1.4
       if: ${{ inputs.import_image_artifact == 'true' }}
