@@ -4,6 +4,10 @@ inputs:
   github_token:
     description: GITHUB_TOKEN secret
     required: true
+  artifactory_url:
+    description: "Artifactory URL"
+    required: false
+    default: "docker.internal.sysdig.com"
   artifactory_username:
     description: Artifactory Username
     default: ""
@@ -138,7 +142,7 @@ runs:
       uses: docker/login-action@v2
       if: ${{inputs.gar_password != '' }}
       with:
-        registry: ${{ inputs.gar_prefix }}
+        registry: ${{ inputs.gar_registry }}
         username: _json_key
         password: ${{ inputs.gar_password }}
     - name: Download image artifact
