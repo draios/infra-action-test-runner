@@ -95,7 +95,7 @@ runs:
   using: "composite"
   steps:
     - name: Setup Python
-      uses: actions/setup-python@v5.0.0
+      uses: actions/setup-python@v5.1.0
       with:
         python-version: "3.x"
     - name: Install Bats and bats libs
@@ -125,21 +125,21 @@ runs:
         kubectl_version: ${{ inputs.kind_kubectl_version }}
         verbosity: ${{ inputs.kind_log_level }}
     - name: Login to Artifactory
-      uses: docker/login-action@v2
+      uses: docker/login-action@v3
       if: ${{inputs.artifactory_username != '' && inputs.artifactory_password != '' }}
       with:
         registry: ${{ inputs.artifactory_url }}
         username: ${{ inputs.artifactory_username }}
         password: ${{ inputs.artifactory_password }}
     - name: Login to Quay
-      uses: docker/login-action@v2
+      uses: docker/login-action@v3
       if: ${{inputs.quay_username != '' && inputs.quay_password != ''  }}
       with:
         registry: quay.io
         username: ${{ inputs.quay_username }}
         password: ${{ inputs.quay_password }}
     - name: Login to GAR
-      uses: docker/login-action@v2
+      uses: docker/login-action@v3
       if: ${{inputs.gar_password != '' }}
       with:
         registry: ${{ inputs.gar_registry }}
