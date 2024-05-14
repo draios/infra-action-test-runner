@@ -18,7 +18,7 @@ inputs:
     required: false
   gar_username:
     description: GAR Username
-    default: ""
+    default: "_json_key"
     required: false
   gar_password:
     description: GAR Password
@@ -26,7 +26,7 @@ inputs:
     required: false
   gar_registry:
     description: GAR Registry
-    default: ""
+    default: "us-docker.pkg.dev"
     required: false
   kind_needed:
     description: "Boolean if a Kubernetes In Docker cluster is needed for tests (default: false)"
@@ -140,10 +140,10 @@ runs:
         password: ${{ inputs.quay_password }}
     - name: Login to GAR
       uses: docker/login-action@v3
-      if: ${{inputs.gar_password != '' }}
+      if: ${{inputs.gar_username != '' && inputs.gar_password != '' }}
       with:
         registry: ${{ inputs.gar_registry }}
-        username: _json_key
+        username: ${{ inputs.gar_username }}
         password: ${{ inputs.gar_password }}
     - name: Download image artifact
       uses: actions/download-artifact@v4.1.7
