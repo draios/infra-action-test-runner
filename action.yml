@@ -18,7 +18,7 @@ inputs:
     required: false
   gar_username:
     description: GAR Username
-    default: ""
+    default: "_json_key"
     required: false
   gar_password:
     description: GAR Password
@@ -26,7 +26,7 @@ inputs:
     required: false
   gar_registry:
     description: GAR Registry
-    default: ""
+    default: "us-docker.pkg.dev"
     required: false
   kind_needed:
     description: "Boolean if a Kubernetes In Docker cluster is needed for tests (default: false)"
