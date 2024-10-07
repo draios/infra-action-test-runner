@@ -95,11 +95,11 @@ runs:
   using: "composite"
   steps:
     - name: Setup Python
-      uses: actions/setup-python@v5.1.1
+      uses: actions/setup-python@v5.2.0
       with:
         python-version: "3.x"
     - name: Install Bats and bats libs
-      uses: bats-core/bats-action@2.0.0
+      uses: bats-core/bats-action@3.0.0
       with:
         bats-version: ${{ inputs.bats_version }}
         support-path: "${{ github.workspace }}/.bats/bats-support"
