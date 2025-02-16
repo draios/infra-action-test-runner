@@ -59,7 +59,7 @@ inputs:
   bats_version:
     description: "BATS version"
     required: false
-    default: "3.0.0"
+    default: "latest"
   envsubst_needed:
     description: Indicate if envsubst is needed (only on MacOs)
     required: false
@@ -99,7 +99,7 @@ runs:
       with:
         python-version: "3.x"
     - name: Install Bats and bats libs
-      uses: bats-core/bats-action@2.0.0
+      uses: bats-core/bats-action@3.0.0
       with:
         bats-version: ${{ inputs.bats_version }}
         support-path: "${{ github.workspace }}/.bats/bats-support"
