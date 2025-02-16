@@ -51,7 +51,7 @@ inputs:
   kind_kubectl_version:
     description: kubectl version to use with KinD
     required: false
-    default: v1.32.0
+    default: v1.32.2
   kind_log_level:
     description: KinD verbosity to set
     required: false
