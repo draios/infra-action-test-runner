@@ -35,7 +35,7 @@ inputs:
   kind_version:
     description: KinD version
     required: false
-    default: "v0.24.0"
+    default: "v0.27.0"
   kind_config_path:
     description: KinD config path
     required: false
