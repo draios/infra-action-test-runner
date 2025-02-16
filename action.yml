@@ -35,7 +35,7 @@ inputs:
   kind_version:
     description: KinD version
     required: false
-    default: "v0.27.0"
+    default: "v0.22.0"
   kind_config_path:
     description: KinD config path
     required: false
@@ -51,7 +51,7 @@ inputs:
   kind_kubectl_version:
     description: kubectl version to use with KinD
     required: false
-    default: v1.32.2
+    default: v1.29.0
   kind_log_level:
     description: KinD verbosity to set
     required: false
