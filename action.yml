@@ -119,7 +119,7 @@ runs:
       uses: helm/kind-action@v1.12.0
       with:
         version: ${{ inputs.kind_version }}
-        config: ${{ inputs.kind_config_path }}
+        # config: ${{ inputs.kind_config_path }}
         cluster_name: ${{ inputs.kind_cluster_name }}
         wait: ${{ inputs.kind_wait }}
         kubectl_version: ${{ inputs.kind_kubectl_version }}
