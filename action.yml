@@ -55,7 +55,7 @@ inputs:
   kind_log_level:
     description: KinD verbosity to set
     required: false
-    default: "4"
+    default: "0"
   bats_version:
     description: "BATS version"
     required: false
