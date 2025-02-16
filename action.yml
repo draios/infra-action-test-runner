@@ -55,11 +55,11 @@ inputs:
   kind_log_level:
     description: KinD verbosity to set
     required: false
-    default: "0"
+    default: "4"
   bats_version:
     description: "BATS version"
     required: false
-    default: "1.10.0"
+    default: "3.0.0"
   envsubst_needed:
     description: Indicate if envsubst is needed (only on MacOs)
     required: false
