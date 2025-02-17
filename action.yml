@@ -124,11 +124,11 @@ runs:
         sudo mkdir -p /etc/containerd
         sudo containerd config default | sudo tee /etc/containerd/config.toml > /dev/null
         sudo sed -i 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
-        # sudo systemctl daemon-reload
-        # sudo systemctl restart docker
+        sudo systemctl daemon-reload
+        sudo systemctl restart docker
 
-        # sudo pkill containerd || true
-        # sudo containerd &> /dev/null &
+        sudo pkill containerd || true
+        sudo containerd &> /dev/null &
         # sudo pkill dockerd || true
         # sudo dockerd &> /dev/null &
         docker --version
