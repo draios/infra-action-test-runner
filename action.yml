@@ -109,7 +109,7 @@ runs:
     - name: Setup envsubst
       if: ${{ inputs.envsubst_needed == 'true' }}
       shell: bash
-      run: sudo apt-get remove docker.io containerd runc; sudo apt update; sudo apt install -y gettext-base ca-certificates curl gnupg lsb-release; docker --version; containerd --version
+      run: sudo apt autoremove docker.io containerd runc; sudo apt update; sudo apt install -y gettext-base ca-certificates curl gnupg lsb-release; docker --version; containerd --version
     - name: Setup Taskfile
       uses: arduino/setup-task@v2
     - name: Setup Helm
