@@ -106,6 +106,9 @@ runs:
         assert-path: "${{ github.workspace }}/.bats/bats-assert"
         detik-path: "${{ github.workspace }}/.bats/bats-detik"
         file-path: "${{ github.workspace }}/.bats/bats-file"
+    - name: Set environment variable for this step
+        run: |
+          echo "DOCKER_CGROUPS=/sys/fs/cgroup/cgroupfs" >> $GITHUB_ENV
     - name: Setup envsubst
       if: ${{ inputs.envsubst_needed == 'true' }}
       shell: bash
@@ -130,7 +133,6 @@ runs:
         # sudo dockerd &> /dev/null &
         docker --version
         containerd --version
-        export DOCKER_CGROUPS: "/sys/fs/cgroup/cgroupfs"
         docker info | grep Cgroup
     - name: Setup Taskfile
       uses: arduino/setup-task@v2
