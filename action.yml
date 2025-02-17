@@ -35,7 +35,7 @@ inputs:
   kind_version:
     description: KinD version
     required: false
-    default: "v0.19.0"
+    default: "v0.27.0"
   kind_config_path:
     description: KinD config path
     required: false
@@ -51,7 +51,7 @@ inputs:
   kind_kubectl_version:
     description: kubectl version to use with KinD
     required: false
-    default: v1.24.15
+    default: v1.30.4
   kind_log_level:
     description: KinD verbosity to set
     required: false
@@ -106,35 +106,30 @@ runs:
         assert-path: "${{ github.workspace }}/.bats/bats-assert"
         detik-path: "${{ github.workspace }}/.bats/bats-detik"
         file-path: "${{ github.workspace }}/.bats/bats-file"
-    - name: Set environment variable for this step
-      shell: bash
-      run: |
-        echo "DOCKER_CGROUPS=/sys/fs/cgroup/cgroupfs" >> $GITHUB_ENV
     - name: Setup envsubst
       if: ${{ inputs.envsubst_needed == 'true' }}
       shell: bash
       run: |
-        # mount | grep cgroup
         sudo apt update
         sudo apt install -y gettext-base ca-certificates curl gnupg lsb-release
         # ls -l /var/run/docker.sock
-        sudo mkdir -m 0755 -p /etc/apt/keyrings
-        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-        echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-        sudo mkdir -p /etc/systemd/system/docker.service.d
-        echo -e "[Service]\nEnvironment=\"DOCKER_CGROUPS=/sys/fs/cgroup/systemd\"" | sudo tee /etc/systemd/system/docker.service.d/override.conf
-        sudo apt-get update
-        sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-        sudo mkdir -p /etc/containerd
-        sudo containerd config default | sudo tee /etc/containerd/config.toml > /dev/null
-        sudo sed -i 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
-        sudo pkill containerd || true
-        sudo containerd &> /dev/null &
-        # sudo pkill dockerd || true
-        # sudo dockerd &> /dev/null &
-        docker --version
-        containerd --version
-        docker info | grep Cgroup
+        # sudo mkdir -m 0755 -p /etc/apt/keyrings
+        # curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+        # echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+        # sudo mkdir -p /etc/systemd/system/docker.service.d
+        # echo -e "[Service]\nEnvironment=\"DOCKER_CGROUPS=/sys/fs/cgroup/systemd\"" | sudo tee /etc/systemd/system/docker.service.d/override.conf
+        # sudo apt-get update
+        # sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+        # sudo mkdir -p /etc/containerd
+        # sudo containerd config default | sudo tee /etc/containerd/config.toml > /dev/null
+        # sudo sed -i 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
+        # sudo pkill containerd || true
+        # sudo containerd &> /dev/null &
+        # # sudo pkill dockerd || true
+        # # sudo dockerd &> /dev/null &
+        # docker --version
+        # containerd --version
+        # docker info | grep Cgroup
     - name: Setup Taskfile
       uses: arduino/setup-task@v2
     - name: Setup Helm
