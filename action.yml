@@ -117,8 +117,14 @@ runs:
         echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
         sudo apt-get update
         sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+        sudo mkdir -p /etc/containerd
+        sudo containerd config default > /etc/containerd/config.toml
+        sudo sed -i 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
+        sudo systemctl restart containerd
+        sudo systemctl restart docker
         docker --version
         containerd --version
+        docker info | grep Cgroup
     - name: Setup Taskfile
       uses: arduino/setup-task@v2
     - name: Setup Helm
