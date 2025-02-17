@@ -107,8 +107,8 @@ runs:
         detik-path: "${{ github.workspace }}/.bats/bats-detik"
         file-path: "${{ github.workspace }}/.bats/bats-file"
     - name: Set environment variable for this step
-        run: |
-          echo "DOCKER_CGROUPS=/sys/fs/cgroup/cgroupfs" >> $GITHUB_ENV
+      run: |
+        echo "DOCKER_CGROUPS=/sys/fs/cgroup/cgroupfs" >> $GITHUB_ENV
     - name: Setup envsubst
       if: ${{ inputs.envsubst_needed == 'true' }}
       shell: bash
