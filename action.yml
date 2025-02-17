@@ -130,6 +130,7 @@ runs:
         # sudo dockerd &> /dev/null &
         docker --version
         containerd --version
+        export DOCKER_CGROUPS: "/sys/fs/cgroup/cgroupfs"
         docker info | grep Cgroup
     - name: Setup Taskfile
       uses: arduino/setup-task@v2
