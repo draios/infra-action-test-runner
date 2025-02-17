@@ -59,7 +59,7 @@ inputs:
   bats_version:
     description: "BATS version"
     required: false
-    default: "1.10.0"
+    default: "latest"
   envsubst_needed:
     description: Indicate if envsubst is needed (only on MacOs)
     required: false
