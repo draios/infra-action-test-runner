@@ -109,11 +109,11 @@ runs:
     - name: Setup envsubst
       if: ${{ inputs.envsubst_needed == 'true' }}
       shell: bash
-      run: sudo apt update; sudo apt install -y gettext-base
+      run: sudo apt-get remove docker docker-engine docker.io containerd runc; sudo apt update; sudo apt install -y gettext-base ca-certificates curl gnupg lsb-release; docker --version; containerd --version
     - name: Setup Taskfile
       uses: arduino/setup-task@v2
     - name: Setup Helm
-      uses: azure/setup-helm@v4
+      uses: azure/setup-helm@v4.2.0
     - name: Setup KinD
       if: ${{ inputs.kind_needed == 'true' }}
       uses: helm/kind-action@v1.12.0
