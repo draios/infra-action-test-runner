@@ -110,6 +110,7 @@ runs:
       if: ${{ inputs.envsubst_needed == 'true' }}
       shell: bash
       run: |
+        mount | grep cgroup
         sudo apt update
         sudo apt install -y gettext-base ca-certificates curl gnupg lsb-release
         # ls -l /var/run/docker.sock
