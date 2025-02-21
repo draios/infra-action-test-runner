@@ -35,7 +35,7 @@ inputs:
   kind_version:
     description: KinD version
     required: false
-    default: "v0.19.0"
+    default: "v0.27.0"
   kind_config_path:
     description: KinD config path
     required: false
@@ -51,7 +51,7 @@ inputs:
   kind_kubectl_version:
     description: kubectl version to use with KinD
     required: false
-    default: v1.24.15
+    default: v1.30.4
   kind_log_level:
     description: KinD verbosity to set
     required: false
@@ -95,7 +95,7 @@ runs:
   using: "composite"
   steps:
     - name: Setup Python
-      uses: actions/setup-python@v5.3.0
+      uses: actions/setup-python@v5.4.0
       with:
         python-version: "3.x"
     - name: Install Bats and bats libs
@@ -113,10 +113,10 @@ runs:
     - name: Setup Taskfile
       uses: arduino/setup-task@v2
     - name: Setup Helm
-      uses: azure/setup-helm@v4
+      uses: azure/setup-helm@v4.3.0
     - name: Setup KinD
       if: ${{ inputs.kind_needed == 'true' }}
-      uses: helm/kind-action@v1.10.0
+      uses: helm/kind-action@v1.12.0
       with:
         version: ${{ inputs.kind_version }}
         config: ${{ inputs.kind_config_path }}
