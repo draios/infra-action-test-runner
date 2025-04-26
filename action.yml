@@ -95,11 +95,11 @@ runs:
   using: "composite"
   steps:
     - name: Setup Python
-      uses: actions/setup-python@v5.4.0
+      uses: actions/setup-python@v5.6.0
       with:
         python-version: "3.x"
     - name: Install Bats and bats libs
-      uses: bats-core/bats-action@3.0.0
+      uses: bats-core/bats-action@3.0.1
       with:
         bats-version: ${{ inputs.bats_version }}
         support-path: "${{ github.workspace }}/.bats/bats-support"
@@ -146,7 +146,7 @@ runs:
         username: ${{ inputs.gar_username }}
         password: ${{ inputs.gar_password }}
     - name: Download image artifact
-      uses: actions/download-artifact@v4.1.8
+      uses: actions/download-artifact@v4.3.0
       if: ${{ inputs.import_image_artifact == 'true' }}
       with:
         name: ${{ inputs.artifact_name }}
