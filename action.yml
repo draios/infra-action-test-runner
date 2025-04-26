@@ -1,95 +1,83 @@
 name: "Tests Runner"
 description: GitHub Action for run tests, Sysdig way'
 inputs:
+  artifact_name:
+    default: "image"
+    description: Name of the artifact to be downloaded and imported
+    required: false
+  bats_version:
+    default: "v1.11.1"
+    description: "BATS version"
+    required: false
+  envsubst_needed:
+    default: "false"
+    description: Indicate if envsubst is needed (only on MacOs)
+    required: false
+  gar_password:
+    default: ""
+    description: GAR Password
+    required: false
+  gar_registry:
+    default: "us-docker.pkg.dev"
+    description: GAR Registry
+    required: false
+  gar_username:
+    default: "_json_key"
+    description: GAR Username
+    required: false
   github_token:
     description: GITHUB_TOKEN secret
     required: true
-  artifactory_url:
-    description: "Artifactory URL"
-    required: false
-    default: "docker.internal.sysdig.com"
-  artifactory_username:
-    description: Artifactory Username
-    default: ""
-    required: false
-  artifactory_password:
-    description: Artifactory Password
-    default: ""
-    required: false
-  gar_username:
-    description: GAR Username
-    default: "_json_key"
-    required: false
-  gar_password:
-    description: GAR Password
-    default: ""
-    required: false
-  gar_registry:
-    description: GAR Registry
-    default: "us-docker.pkg.dev"
-    required: false
-  kind_needed:
-    description: "Boolean if a Kubernetes In Docker cluster is needed for tests (default: false)"
-    required: false
-    default: "true"
-  kind_version:
-    description: KinD version
-    required: false
-    default: "v0.27.0"
-  kind_config_path:
-    description: KinD config path
-    required: false
-    default: tests/kind-config.yaml
-  kind_cluster_name:
-    description: KinD cluster name
-    required: false
-    default: kind
-  kind_wait:
-    description: KinD wait time for provisioning
-    required: false
-    default: 60s
-  kind_kubectl_version:
-    description: kubectl version to use with KinD
-    required: false
-    default: v1.30.4
-  kind_log_level:
-    description: KinD verbosity to set
-    required: false
-    default: "0"
-  bats_version:
-    description: "BATS version"
-    required: false
-    default: "latest"
-  envsubst_needed:
-    description: Indicate if envsubst is needed (only on MacOs)
-    required: false
-    default: "false"
-  taskfile_name:
-    description: Name of the taskfile task to be executed
-    required: false
-    default: "test"
-  quay_username:
-    description: quay Username
-    default: ""
-    required: false
-  quay_password:
-    description: quay Password
-    default: ""
-    required: false
-  artifact_name:
-    description: Name of the artifact to be downloaded and imported
-    required: false
-    default: "image"
-  import_image_artifact:
-    description: "Boolean if the image artifact should be imported (default: false)"
-    required: false
-    default: "false"
-  local_image_name:
-    description: Name of the image to be imported
-    required: false
-    default: "testimage:local"
   image_original_tag:
     description: Original tag of the image to be imported
+    required: false
+  import_image_artifact:
+    default: "false"
+    description: "Boolean if the image artifact should be imported (default: false)"
+    required: false
+  local_image_name:
+    default: "testimage:local"
+    description: Name of the image to be imported
+    required: false
+  kind_cluster_name:
+    default: kind
+    description: KinD cluster name
+    required: false
+  kind_config_path:
+    default: tests/kind-config.yaml
+    description: KinD config path
+    required: false
+  kind_kubectl_version:
+    default: v1.29.14
+    description: kubectl version to use with KinD
+    required: false
+  kind_log_level:
+    default: "0"
+    description: KinD verbosity to set
+    required: false
+  kind_needed:
+    default: "true"
+    description: "Boolean if a Kubernetes In Docker cluster is needed for tests (default: false)"
+    required: false
+  kind_version:
+    default: "v0.27.0"
+    description: KinD version
+    required: false
+  kind_wait:
+    default: 60s
+    description: KinD wait time for provisioning
+    required: false
+  quay_username:
+    default: ""
+    description: quay Username
+    required: false
+  quay_password:
+    default: ""
+    description: quay Password
+    required: false
+  taskfile_name:
+    default: "test"
+    description: Name of the taskfile task to be executed
     required: false
 runs:
   using: "composite"
@@ -101,15 +89,18 @@ runs:
     - name: Install Bats and bats libs
       uses: bats-core/bats-action@3.0.1
       with:
-        bats-version: ${{ inputs.bats_version }}
-        support-path: "${{ github.workspace }}/.bats/bats-support"
         assert-path: "${{ github.workspace }}/.bats/bats-assert"
+        bats-version: ${{ inputs.bats_version }}
         detik-path: "${{ github.workspace }}/.bats/bats-detik"
         file-path: "${{ github.workspace }}/.bats/bats-file"
+        support-path: "${{ github.workspace }}/.bats/bats-support"
     - name: Setup envsubst
       if: ${{ inputs.envsubst_needed == 'true' }}
       shell: bash
-      run: sudo apt update; sudo apt install -y gettext-base
+      run: |
+        sudo apt-get update
+        sudo apt-get upgrade -y
+        sudo apt-get install -y gettext-base
     - name: Setup Taskfile
       uses: arduino/setup-task@v2
     - name: Setup Helm
@@ -118,33 +109,26 @@ runs:
       if: ${{ inputs.kind_needed == 'true' }}
       uses: helm/kind-action@v1.12.0
       with:
-        version: ${{ inputs.kind_version }}
-        config: ${{ inputs.kind_config_path }}
         cluster_name: ${{ inputs.kind_cluster_name }}
-        wait: ${{ inputs.kind_wait }}
+        config: ${{ inputs.kind_config_path }}
         kubectl_version: ${{ inputs.kind_kubectl_version }}
+        wait: ${{ inputs.kind_wait }}
         verbosity: ${{ inputs.kind_log_level }}
-    - name: Login to Artifactory
-      uses: docker/login-action@v3
-      if: ${{inputs.artifactory_username != '' && inputs.artifactory_password != '' }}
-      with:
-        registry: ${{ inputs.artifactory_url }}
-        username: ${{ inputs.artifactory_username }}
-        password: ${{ inputs.artifactory_password }}
+        version: ${{ inputs.kind_version }}
     - name: Login to Quay
       uses: docker/login-action@v3
       if: ${{inputs.quay_username != '' && inputs.quay_password != ''  }}
       with:
+        password: ${{ inputs.quay_password }}
         registry: quay.io
         username: ${{ inputs.quay_username }}
-        password: ${{ inputs.quay_password }}
     - name: Login to GAR
       uses: docker/login-action@v3
       if: ${{inputs.gar_username != '' && inputs.gar_password != '' }}
       with:
+        password: ${{ inputs.gar_password }}
         registry: ${{ inputs.gar_registry }}
         username: ${{ inputs.gar_username }}
-        password: ${{ inputs.gar_password }}
     - name: Download image artifact
       uses: actions/download-artifact@v4.3.0
       if: ${{ inputs.import_image_artifact == 'true' }}
@@ -174,16 +158,14 @@ runs:
       shell: bash
       env:
         BATS_LIB_PATH: "${{ github.workspace }}/.bats"
-        GITHUB_REF_NAME: ${{ github.ref }}
-        GITHUB_RUN_ID: ${{ github.run_id }}
-        ARTIFACTORY_USERNAME: ${{ inputs.artifactory_username }}
-        ARTIFACTORY_PASSWORD: ${{ inputs.artifactory_password }}
-        GAR_USERNAME: ${{ inputs.gar_username }}
         GAR_PASSWORD: ${{ inputs.gar_password }}
         GAR_REGISTRY: ${{ inputs.gar_registry }}
-        TASKFILE_NAME: ${{ inputs.taskfile_name }}
+        GAR_USERNAME: ${{ inputs.gar_username }}
+        GITHUB_REF_NAME: ${{ github.ref }}
+        GITHUB_RUN_ID: ${{ github.run_id }}
         QUAY_USERNAME: ${{ inputs.quay_username }}
         QUAY_PASSWORD: ${{ inputs.quay_password }}
+        TASKFILE_NAME: ${{ inputs.taskfile_name }}
       run: task ${TASKFILE_NAME}
     - name: Debug failure
       if: failure()
