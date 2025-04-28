@@ -21,23 +21,25 @@ The other minimal entrypoints required are
 
 ## Optional
 
-- `artifactory_username`: Artifactory Username
-- `artifactory_password`: Artifactory Password
-- `gar_username`: GAR Username
+- `artifact_name`: Name of the artifact to be downloaded and imported (default: "image")
+- `bats_version`: BATS version (default: "1.11.1")
+- `envsubst_needed`: Indicate if envsubst is needed (default: "false")
 - `gar_password`: GAR Password
 - `gar_registry`: GAR Registry
-- `kind_needed`: Boolean if a Kubernetes In Docker cluster is needed for tests (default: false)
-- `kind_version`: KinD version (default: "v0.19.0")
-- `kind_config_path`: KinD config path (default: tests/kind-config.yaml)
+- `gar_username`: GAR Username
+- `image_original_tag`: Original tag of the image to be imported
+- `import_image_artifact`: Boolean if the image artifact should be imported (default: false)
 - `kind_cluster_name`: KinD cluster name (default: kind)
-- `kind_wait`: increase the timeout for KinD to check if the control plane is ready (default: 60s)
-- `kind_kubectl_version`: the kubectl version to use with KinD (default: v1.24.15)
+- `kind_config_path`: KinD config path (default: tests/kind-config.yaml)
+- `kind_kubectl_version`: the kubectl version to use with KinD (default: v1.29.14)
 - `kind_log_level`: the KinD verbosity level (default: 0)
-- `bats_version`: BATS version ("1.9.0")
-- `envsubst_needed`: Indicate if envsubst is needed (default: "false")
-- `taskfile_name`: Name of the taskfile task to be executed (default: "test")
-- `quay_username`: quay Username
+- `kind_needed`: Boolean if a Kubernetes In Docker cluster is needed for tests (default: true)
+- `kind_version`: KinD version (default: "v0.27.0")
+- `kind_wait`: increase the timeout for KinD to check if the control plane is ready (default: 60s)
+- `local_image_name`: Name of the image to be imported (default: "testimage:local")
 - `quay_password`: quay Password
+- `quay_username`: quay Username
+- `taskfile_name`: Name of the taskfile task to be executed (default: "test")
 
 ## Example workflow
 
@@ -55,8 +57,8 @@ jobs:
   tests:
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v2
-      - uses: draios/infra-action-test-runner@v1
+      - uses: actions/checkout@v4.2.2
+      - uses: draios/infra-action-test-runner@v1.3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           # this will trigger `task test` in the target repo
