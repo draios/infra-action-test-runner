@@ -48,8 +48,8 @@ inputs:
     description: KinD config path
     required: false
   kind_kubectl_version:
-    default: v1.27.1 - this version cannot be updated until the utility cluster has been updated - DEVOPS-14991
-    description: kubectl version to use with KinD
+    default: v1.27.1
+    description: kubectl version to use with KinD - this version cannot be updated until the utility cluster has been updated - DEVOPS-14991
     required: false
   kind_log_level:
     description: KinD verbosity to set
