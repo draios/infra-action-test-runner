@@ -48,8 +48,8 @@ inputs:
     description: KinD config path
     required: false
   kind_kubectl_version:
-    default: v1.29.14
-    description: kubectl version to use with KinD
+    default: v1.27.1
+    description: kubectl version to use with KinD - this version cannot be updated until the utility cluster has been updated - DEVOPS-14991
     required: false
   kind_log_level:
     description: KinD verbosity to set
@@ -60,8 +60,8 @@ inputs:
     description: "Boolean if a Kubernetes In Docker cluster is needed for tests (default: true)"
     required: false
   kind_version:
-    default: "v0.27.0"
-    description: KinD version
+    default: "v0.19.0"
+    description: KinD version - this version cannot be updated until the utility cluster has been updated - DEVOPS-14991
     required: false
   kind_wait:
     default: 60s
