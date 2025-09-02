@@ -6,10 +6,10 @@ jobs:
   pre-commit:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4.2.2
+    - uses: actions/checkout@v5.0.0
     - uses: actions/setup-python@v5.6.0
       with:
-        python-version: '3.x'
+        python-version: '3.13'
     - uses: pre-commit/action@v3.0.1
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
@@ -20,7 +20,7 @@ jobs:
     outputs:
       net_tag: ${{ steps.tag_version.outputs.new_tag }}
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@v5.0.0
       - name: Bump version and push tag
         id: tag_version
         uses: mathieudutour/github-tag-action@v6.2
@@ -31,7 +31,7 @@ jobs:
   test-action-default:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@v5.0.0
       - uses: arduino/setup-task@v2
       - name: Test local action
         id: local-action
@@ -39,7 +39,7 @@ jobs:
   test-action-not-default:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@v5.0.0
       - uses: arduino/setup-task@v2
       - name: Test local action
         id: local-action

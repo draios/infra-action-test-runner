@@ -22,7 +22,7 @@ The other minimal entrypoints required are
 ## Optional
 
 - `artifact_name`: Name of the artifact to be downloaded and imported (default: "image")
-- `bats_version`: BATS version (default: "1.11.1")
+- `bats_version`: BATS version (default: "1.12.0")
 - `envsubst_needed`: Indicate if envsubst is needed (default: "false")
 - `gar_password`: GAR Password
 - `gar_registry`: GAR Registry
@@ -31,10 +31,10 @@ The other minimal entrypoints required are
 - `import_image_artifact`: Boolean if the image artifact should be imported (default: false)
 - `kind_cluster_name`: KinD cluster name (default: kind)
 - `kind_config_path`: KinD config path (default: tests/kind-config.yaml)
-- `kind_kubectl_version`: the kubectl version to use with KinD (default: v1.27.1) - this version cannot be updated until the utility cluster has been updated - DEVOPS-14991
+- `kind_kubectl_version`: the kubectl version to use with KinD (default: v1.33.4)
 - `kind_log_level`: the KinD verbosity level (default: 0)
 - `kind_needed`: Boolean if a Kubernetes In Docker cluster is needed for tests (default: true)
-- `kind_version`: KinD version (default: "v0.19.0") - this version cannot be updated until the utility cluster has been updated - DEVOPS-14991
+- `kind_version`: KinD version (default: "v0.30.0")
 - `kind_wait`: increase the timeout for KinD to check if the control plane is ready (default: 60s)
 - `local_image_name`: Name of the image to be imported (default: "testimage:local")
 - `quay_password`: quay Password
@@ -57,8 +57,8 @@ jobs:
   tests:
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v4.2.2
-      - uses: draios/infra-action-test-runner@v1.3
+      - uses: actions/checkout@v5.0.0
+      - uses: draios/infra-action-test-runner@v3.0.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           # this will trigger `task test` in the target repo
